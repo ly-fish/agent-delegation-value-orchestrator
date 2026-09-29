@@ -1,0 +1,24 @@
+# dependencies & build output
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# runtime data (SQLite, quarantined artifacts, local workspace) and scratch files
+.data/
+.scratch/
+evals/results/
+*.log
+
+# deployment-specific configuration and secrets (the *.example.yaml files are tracked)
+configs/service.yaml
+configs/peers.yaml
+configs/policy.yaml
+secrets/
+.env
+.env.*
+!.env.example
+
+.DS_Store
+.idea/
+.vscode/

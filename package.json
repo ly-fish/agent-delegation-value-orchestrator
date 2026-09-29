@@ -1,0 +1,47 @@
+{
+  "name": "harness-orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Delegation Value Orchestrator (DVO): a risk-controlled control plane over DeepSeek Harness (local) and A2A (remote) agents.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "tsc -b tsconfig.build.json",
+    "clean": "node scripts/clean.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "check:architecture": "node scripts/check-architecture.mjs",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "schemas": "node --conditions=@dvo/source scripts/export-schemas.ts",
+    "check": "npm run check:architecture && npm run check:secrets && npm run typecheck && npm run lint && npm run format:check && npm run test:coverage",
+    "dev": "node --conditions=@dvo/source apps/service/src/main.ts",
+    "start": "node apps/service/dist/main.js",
+    "eval:dag": "node --conditions=@dvo/source evals/controlled-dag/run.ts",
+    "demo:peer": "node examples/reference-peer/src/server.ts",
+    "demo:run": "node --conditions=@dvo/source apps/service/src/cli.ts run --config-dir configs/demo --goal 'What is 17 * 23?' --expected 391"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.0",
+    "@vitest/coverage-v8": "5.0.2",
+    "eslint": "10.11.0",
+    "globals": "17.12.0",
+    "prettier": "3.9.9",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.2"
+  }
+}

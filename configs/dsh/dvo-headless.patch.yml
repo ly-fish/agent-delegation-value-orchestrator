@@ -1,0 +1,36 @@
+# DSH patch overlay applied as `dsh --profile headless --patch <this file>` (DSH 0.2.x).
+# Pins the local executor to design §8.2 / §12.2:
+#   - read-only filesystem sandbox (the orchestrator never lets the local agent write);
+#   - approval policy `never`: the one-shot runner has no human to ask, so every approval
+#     request is rejected instead of blocking;
+#   - no in-process subagents: one-shot, depth-bounded execution, no recursive delegation.
+# Row ids follow the `dsh-base` bundle (packages/bundle/base/cordis.patch.yml at the pinned
+# commit). After any DSH upgrade, verify with:
+#   dsh --profile headless --patch configs/dsh/dvo-headless.patch.yml --dump-config
+
+- id: sandbox-policy
+  config:
+    mode: read-only
+    workspaceRoot: !!js process.cwd()
+
+- id: approval
+  config:
+    policy: never
+
+- id: subagent-spawn-in-process
+  disabled: true
+
+- id: subagent-fork-in-process
+  disabled: true
+
+# The permission-preset service requires the composed sandbox/approval pair to match a preset
+# (read-only + never is not among the defaults), otherwise it fails to activate.
+- id: permission
+  config:
+    presets:
+      dvo-read-only:
+        sandbox: read-only
+        approval: never
+        name: DVO read-only
+        description: One-shot, read-only execution driven by the Delegation Value Orchestrator
+    defaultPreset: dvo-read-only

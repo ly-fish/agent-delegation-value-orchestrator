@@ -1,0 +1,39 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    {
+      "path": "../../packages/core"
+    },
+    {
+      "path": "../../packages/evidence"
+    },
+    {
+      "path": "../../packages/scheduler"
+    },
+    {
+      "path": "../../packages/policy"
+    },
+    {
+      "path": "../../packages/trace"
+    },
+    {
+      "path": "../../packages/verifier"
+    },
+    {
+      "path": "../../packages/dsh-bridge"
+    },
+    {
+      "path": "../../packages/a2a-bridge"
+    },
+    {
+      "path": "../../packages/orchestrator"
+    }
+  ]
+}

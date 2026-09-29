@@ -1,0 +1,22 @@
+{
+  "name": "@dvo/dsh-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "The only package that knows DeepSeek Harness: a headless-process executor with a locked runtime profile.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@dvo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@dvo/core": "0.1.0",
+    "@dvo/evidence": "0.1.0"
+  }
+}

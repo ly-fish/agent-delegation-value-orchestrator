@@ -1,0 +1,10 @@
+peers:
+  - id: reference-peer
+    endpoint: http://127.0.0.1:9100
+    allowed: true
+    trustTier: internal
+    allowInsecureLoopback: true # demo only: plain HTTP is accepted solely on loopback
+    extensionUris: [urn:research:dvo:evidence-envelope:v1]
+    costPerCallUsd: 0.002
+    timeoutMs: 20000
+    poll: { initialDelayMs: 200, maxDelayMs: 1000, multiplier: 1.5 }

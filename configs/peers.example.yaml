@@ -1,0 +1,30 @@
+# Allowlisted A2A peers (design appendix B, §9.4). Copy to peers.yaml and edit.
+# Only peers listed here with `allowed: true` are ever contacted; endpoints must be HTTPS.
+# An Agent Card is candidate information, not a trust signal: reliability is learned from traces.
+
+peers:
+  - id: research-peer-01
+    endpoint: https://agent.example.org/a2a
+    allowed: true
+    # Highest data classification this peer may receive (public | internal | restricted).
+    trustTier: internal
+    maxConcurrency: 2
+    timeoutMs: 60000
+    maxArtifactBytes: 5242880
+    allowedSkills:
+      - evidence-retrieval
+      - code-review
+    # Resolved at call time by the secret provider (env HARNESS_SECRET_ORCHESTRATOR_A2A_RESEARCH_PEER_01
+    # or file <secrets.dir>/orchestrator/a2a/research-peer-01). Never written to traces.
+    credentialsRef: secret://orchestrator/a2a/research-peer-01
+    authScheme: bearer
+    extensionUris:
+      - urn:research:dvo:evidence-envelope:v1
+    # Only true for peers under our control that de-duplicate SendMessage by messageId.
+    # Third-party peers (including the reference @a2a-js/sdk server) must stay false.
+    dedupSupported: false
+    # Restricted data additionally needs trustTier: restricted, this flag and a human approval.
+    allowRestricted: false
+    costPerCallUsd: 0.01
+    artifactHosts: [agent.example.org]
+    poll: { initialDelayMs: 500, maxDelayMs: 10000, multiplier: 1.6 }

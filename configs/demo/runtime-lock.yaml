@@ -1,0 +1,16 @@
+node: 24.21.0
+a2a: { protocolVersions: ['1.0'], sdkReference: '@a2a-js/sdk@1.2.1' }
+dsh:
+  # Demo stand-in for `dsh`: the fake launcher from the testkit speaks the same NDJSON protocol.
+  command: [node, ../../packages/testkit/bin/fake-dsh.mjs]
+  expectedVersion: 0.2.0-rc.1
+  commit: 4878cdabd87d4041bdaff61d04c966883b9fd07a
+  profile: headless
+  patchFiles: [../dsh/dvo-headless.patch.yml]
+  modelRoute: demo/fake
+  toolAllowlist: [read_file]
+  pricing: { inputPerMTokUsd: 0.27, outputPerMTokUsd: 1.10 }
+  envAllowlist: [PATH, HOME, FAKE_DSH_SCENARIO, FAKE_DSH_ANSWER]
+  workdir: ../../.data
+  maxFinalBytes: 1048576
+  killGraceMs: 2000

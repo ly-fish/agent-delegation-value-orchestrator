@@ -1,0 +1,8 @@
+# Demo configuration: local runtime = the testkit's fake `dsh` (always answers "42"),
+# one reference A2A peer on loopback (examples/reference-peer). Not for production.
+http: { host: 127.0.0.1, port: 8080 }
+storage: { sqlitePath: ../../.data/demo.db, quarantineDir: ../../.data/demo-quarantine }
+logging: { level: info }
+local: { enabled: true, costEstimateUsd: 0.001, timeoutMs: 30000, maxConcurrency: 1, skills: [general] }
+verifiers:
+  - { id: exact-answer, type: exact-answer }

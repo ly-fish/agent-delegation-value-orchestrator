@@ -1,0 +1,46 @@
+# Delegation Value Orchestrator policy (design §7). Copy to policy.yaml to override.
+# Values shown are the defaults. Any change to this file changes decisions: attach a
+# decision-replay snapshot (`harness replay <taskId>`) to the review (design §15).
+
+policy:
+  version: dvo-rules/1.0.0
+  minEscalationWindowMs: 5000 # no delegation with less time left than this
+  latencyCostUsdPerSecond: 0.0005 # value of waiting, per second of expected latency
+  maxLocalAttempts: 2
+  maxAttemptsPerPeer: 2
+  retryCorrelation: 0.5 # a retry after a wrong answer is correlated with it
+  depthPenalty: 0.3 # applied to every executor alike (never scales agent count)
+  couplingMaxForDelegate: 0.75 # tightly coupled tasks stay local
+  couplingMaxForParallel: 0.45
+  parallelMaxWidth: 3
+  sufficientConfidence: 0.9 # stop threshold when no verifier exists
+  trustPenalty: { public: 0.04, internal: 0.02, restricted: 0.01 }
+  halfOpenPenalty: 0.05
+  evidenceInformativeness: 0.5
+  minNetValueUsd: 0
+  exploration:
+    # V2 data collection only: randomised choices on safe (public + verifiable + opted-in) tasks,
+    # logged with propensities for off-policy evaluation. Keep disabled in production.
+    enabled: false
+    epsilon: 0.1
+    seed: 0
+
+engine:
+  acceptLateResults: true
+  maxDecisions: 24
+  verifierTimeoutMs: 60000
+  defaultSkill: general
+  latencyPriorFraction: 0.5
+  capabilityTtlMs: 30000
+
+circuit:
+  failureThreshold: 3
+  cooldownMs: 60000
+  halfOpenMaxProbes: 1
+  successThreshold: 1
+
+reliability:
+  localPrior: [3, 2] # Beta(α, β) before any observation
+  peerPrior: [1, 1]
+  calibratorWeight: 0.3
+  calibratorHalfLife: 10

@@ -1,0 +1,39 @@
+{
+  "name": "@dvo/service",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Composition root: configuration, HTTP API, CLI, logging and metrics exposition.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "bin": {
+    "harness": "./dist/cli.js"
+  },
+  "exports": {
+    ".": {
+      "@dvo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@dvo/core": "0.1.0",
+    "@dvo/evidence": "0.1.0",
+    "@dvo/scheduler": "0.1.0",
+    "@dvo/policy": "0.1.0",
+    "@dvo/trace": "0.1.0",
+    "@dvo/verifier": "0.1.0",
+    "@dvo/dsh-bridge": "0.1.0",
+    "@dvo/a2a-bridge": "0.1.0",
+    "@dvo/orchestrator": "0.1.0",
+    "fastify": "5.12.5",
+    "pino": "10.3.1",
+    "yaml": "2.9.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@dvo/testkit": "0.1.0"
+  }
+}

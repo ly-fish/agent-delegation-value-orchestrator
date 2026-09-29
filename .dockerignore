@@ -1,0 +1,16 @@
+node_modules
+**/node_modules
+**/dist
+coverage
+.data
+.scratch
+evals/results
+.git
+.github
+*.log
+configs/service.yaml
+configs/peers.yaml
+configs/policy.yaml
+secrets
+.env
+.env.*

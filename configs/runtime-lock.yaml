@@ -1,0 +1,41 @@
+# Pinned runtime versions (design §8.3, §14 M0, §18.1).
+# Every change here is a deliberate upgrade: it must pass the full contract + chaos suites
+# (`npm run check`) before it is merged. The profile digest recorded in every trace covers
+# the DSH version, the patch files below, the model route and the tool allowlist.
+
+node: 24.21.0
+# Base image of the runtime container (pin by digest in production: node@sha256:…).
+image: node:24.21.0-bookworm-slim
+
+a2a:
+  # Accepted A2A protocol versions (Major.Minor). Only JSON-RPC interfaces in this range are used.
+  protocolVersions: ['1.0']
+  # Reference implementation the bridge is contract-tested against.
+  sdkReference: '@a2a-js/sdk@1.2.1'
+
+dsh:
+  # Launcher argv prefix. With a global install this is ["dsh"]; from npm:
+  # ["npx", "--no-install", "@deepseek-ai/dsh"].
+  command: ['dsh']
+  expectedVersion: 0.2.0-rc.1
+  commit: 4878cdabd87d4041bdaff61d04c966883b9fd07a
+  # One-shot runner; the bridge only ever drives `--profile headless --json -`.
+  profile: headless
+  patchFiles:
+    - dsh/dvo-headless.patch.yml
+  modelRoute: deepseek/deepseek-chat
+  # Tools the patch leaves enabled (recorded for audit; enforced by the patch + read-only sandbox).
+  toolAllowlist: [read_file, list_directory, grep, glob]
+  pricing:
+    inputPerMTokUsd: 0.27
+    outputPerMTokUsd: 1.10
+  envAllowlist: [PATH, HOME, LANG, LC_ALL, TZ, TMPDIR, DSH_HOME]
+  credentialEnv:
+    - name: DEEPSEEK_API_KEY
+      ref: secret://orchestrator/dsh/deepseek-api-key
+  versionArgs: ['--version']
+  enforceVersion: true
+  # Workspace root the local agent may read (it is sandboxed read-only).
+  workdir: ../.data/workspace
+  maxFinalBytes: 1048576
+  killGraceMs: 5000

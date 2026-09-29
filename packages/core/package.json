@@ -1,0 +1,18 @@
+{
+  "name": "@dvo/core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Domain model, state machines, ports and invariants. Depends on nothing.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@dvo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ]
+}

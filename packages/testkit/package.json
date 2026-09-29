@@ -1,0 +1,25 @@
+{
+  "name": "@dvo/testkit",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Fake clock, deterministic ids, scripted executors, a spec-conformant mock A2A peer, a fake dsh binary, chaos wrappers.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@dvo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin"
+  ],
+  "dependencies": {
+    "@dvo/core": "0.1.0"
+  },
+  "bin": {
+    "fake-dsh": "./bin/fake-dsh.mjs"
+  }
+}

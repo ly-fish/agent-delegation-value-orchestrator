@@ -1,0 +1,10 @@
+node_modules
+dist
+coverage
+.data
+.scratch
+evals/results
+package-lock.json
+schemas/*.json
+*.md
+configs/dsh/*.yml

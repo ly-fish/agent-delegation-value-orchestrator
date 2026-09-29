@@ -1,0 +1,18 @@
+{
+  "name": "@dvo/reference-peer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo A2A v1.0 peer built on the official @a2a-js/sdk server: answers arithmetic tasks with DVO EvidenceEnvelopes.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.ts"
+  },
+  "dependencies": {
+    "@a2a-js/sdk": "1.2.1",
+    "express": "5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6"
+  }
+}

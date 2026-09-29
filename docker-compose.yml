@@ -1,0 +1,38 @@
+# Local demo stack: the orchestrator + a reference A2A peer built on the official @a2a-js/sdk.
+#   docker compose up --build
+#   curl -s -X POST localhost:8080/v1/tasks -H 'content-type: application/json' \
+#     -d '{"goal":"What is 17 * 23?","verification":{"verifierId":"exact-answer","params":{"expected":391}}}'
+#
+# The demo configuration (configs/demo) uses the testkit's fake `dsh` as the local runtime and
+# reaches the peer over loopback, so the peer shares the orchestrator's network namespace.
+# For a real deployment use configs/*.example.yaml, HTTPS peers and INSTALL_DSH=true.
+services:
+  harness:
+    build:
+      context: .
+      args:
+        INSTALL_DSH: 'false'
+    image: harness-dvo:0.1.0
+    environment:
+      HARNESS_CONFIG_DIR: /app/configs/demo
+      HARNESS_HTTP_HOST: 0.0.0.0
+      HARNESS_HTTP_PORT: '8080'
+    ports:
+      - '8080:8080'
+    volumes:
+      - harness-data:/app/.data
+    restart: unless-stopped
+
+  reference-peer:
+    image: harness-dvo:0.1.0
+    depends_on:
+      - harness
+    network_mode: 'service:harness'
+    environment:
+      HOST: 127.0.0.1
+      PORT: '9100'
+    command: ['node', 'examples/reference-peer/src/server.ts']
+    restart: unless-stopped
+
+volumes:
+  harness-data:

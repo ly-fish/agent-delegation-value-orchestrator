@@ -1,0 +1,19 @@
+{
+  "//": "Whole-repository type check (sources, tests, evals, scripts). Resolves workspace packages to their TypeScript sources via the @dvo/source export condition, so no build is needed first.",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "customConditions": ["@dvo/source"]
+  },
+  "include": [
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.ts",
+    "apps/*/src/**/*.ts",
+    "apps/*/test/**/*.ts",
+    "evals/**/*.ts",
+    "examples/**/*.ts",
+    "scripts/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

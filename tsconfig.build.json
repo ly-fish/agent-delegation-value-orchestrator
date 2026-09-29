@@ -1,0 +1,17 @@
+{
+  "//": "Solution file for `tsc -b`: emits every package's dist/ in dependency order.",
+  "files": [],
+  "references": [
+    { "path": "packages/core" },
+    { "path": "packages/evidence" },
+    { "path": "packages/scheduler" },
+    { "path": "packages/policy" },
+    { "path": "packages/trace" },
+    { "path": "packages/verifier" },
+    { "path": "packages/dsh-bridge" },
+    { "path": "packages/a2a-bridge" },
+    { "path": "packages/orchestrator" },
+    { "path": "packages/testkit" },
+    { "path": "apps/service" }
+  ]
+}

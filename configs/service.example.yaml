@@ -1,0 +1,47 @@
+# Service configuration. Copy to service.yaml to override.
+
+http:
+  host: 127.0.0.1
+  port: 8080
+  # Bearer token required on /v1/* (resolved from HARNESS_SECRET_ORCHESTRATOR_API_TOKEN or the secrets dir).
+  # apiTokenRef: secret://orchestrator/api-token
+  bodyLimitBytes: 262144
+  protectMetrics: false
+
+storage:
+  sqlitePath: ../.data/dvo.db
+  quarantineDir: ../.data/quarantine # inbound artifacts, content-addressed, mode 0600, never executed
+
+secrets:
+  envPrefix: HARNESS_SECRET_
+  # dir: /run/secrets
+
+logging:
+  level: info
+
+scheduler:
+  globalConcurrency: 16
+  cancelGraceMs: 5000
+
+ingress:
+  maxGoalChars: 20000
+  defaultClassification: internal
+  defaultSuccessValueUsd: 1
+  maxSuccessValueUsd: 100
+  defaults:
+    { maxCostUsd: 0.5, maxInputTokens: 200000, maxOutputTokens: 20000, maxRemoteCalls: 4, maxParallelAttempts: 2, deadlineMs: 300000 }
+  ceilings:
+    { maxCostUsd: 10, maxInputTokens: 2000000, maxOutputTokens: 200000, maxRemoteCalls: 16, maxParallelAttempts: 4, deadlineMs: 3600000 }
+
+local:
+  enabled: true
+  costEstimateUsd: 0.002
+  timeoutMs: 300000
+  maxConcurrency: 2
+  skills: [general]
+
+# Deterministic verifiers (design §4.1: never an LLM judge). Recipes live here, never in task input.
+verifiers:
+  - { id: exact-answer, type: exact-answer }
+  - { id: iso-date, type: regex, pattern: '^\d{4}-\d{2}-\d{2}$' }
+  # - { id: unit-tests, type: command, command: [node, --test, '{input}'], timeoutMs: 60000 }

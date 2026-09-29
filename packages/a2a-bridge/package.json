@@ -1,0 +1,29 @@
+{
+  "name": "@dvo/a2a-bridge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A2A v1.0 JSON-RPC client: Agent Card discovery, task submission, polling, cancellation, artifacts.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "@dvo/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@dvo/core": "0.1.0",
+    "@dvo/evidence": "0.1.0",
+    "@dvo/scheduler": "0.1.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@a2a-js/sdk": "1.2.1",
+    "express": "5.2.1",
+    "@types/express": "5.0.6"
+  }
+}
