@@ -58,21 +58,7 @@ decision can be replayed bit-for-bit, and "why didn't it delegate?" always has a
 
 ## How it works
 
-```mermaid
-flowchart LR
-  U[Task] --> I[Ingress<br/>validate · redact · hardness]
-  I --> S[(Event log<br/>SQLite)]
-  S --> P[DVO policy<br/>LCB value gating]
-  P -->|local / delegate / parallel / verify / stop| Q[Scheduler<br/>semaphores · deadlines · circuits]
-  Q --> L[DSH bridge<br/>headless --json]
-  Q --> R[A2A bridge<br/>JSON-RPC · outbox · polling]
-  Q --> V[Verifiers<br/>exact · regex · command]
-  L --> G[Evidence gateway<br/>schema · redaction · injection · artifacts]
-  R --> G
-  V --> G
-  G --> S
-  P --> F[Finalizer<br/>verified / supported / proposed / unverified]
-```
+![Harness DVO overview: task state, value-aware orchestration, local and A2A agents, and evidence verification](docs/assets/harness-dvo-overview.png)
 
 A typical trace, taken verbatim from the bundled demo. The fake local runtime always answers 42; the reference
 peer runs on the official A2A SDK:
